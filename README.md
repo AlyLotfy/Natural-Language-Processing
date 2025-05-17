@@ -1,8 +1,6 @@
 # English Text Summarization
 
-A comparative implementation of **extractive** and **abstractive** summarization techniques on the CNN/DailyMail news corpus, with automatic evaluation using ROUGE and BLEU.
-
----
+English Text Summarization implements two complementary NLP strategies—extractive and abstractive—to condense lengthy news articles into concise summaries. The extractive module employs a TextRank-inspired graph algorithm that computes sentence centrality through pairwise similarity and selects the top-ranked sentences verbatim. The abstractive module fine-tunes a pre-trained BART transformer to generate novel, paraphrased summaries using beam search and length constraints for optimal brevity and readability. Both approaches are benchmarked on the CNN/DailyMail corpus, with generated summaries evaluated against journalist-written highlights using ROUGE-1/2/L for recall-oriented overlap and BLEU for n-gram precision. A robust preprocessing pipeline handles sentence segmentation, tokenization, stop-word removal, and similarity matrix construction for the extractive method, while the abstractive method leverages Hugging Face Transformers for seamless inference. The repository provides modular scripts for data loading, summarization, and evaluation, plus a demo that prints the original article, the reference summary, and both system outputs. Experimental results illustrate the trade-offs between the factual accuracy of extractive summaries and the linguistic flexibility of abstractive summaries. Designed for ease of use, the project requires only standard Python libraries and publicly available datasets, with comprehensive documentation and inline code comments to ensure reproducibility. This work establishes a solid baseline for future enhancements in automated text summarization systems.
 
 ## 📖 Project Description
 
