@@ -34,31 +34,31 @@ Both methods are applied to the CNN/DailyMail dataset. Summaries are compared ag
 
 ## 📂 Repository Structure
 .
-├── README.md
-├── data/
-│   └── (optional predownloaded dataset files)
-├── src/
-│   ├── extractive.py      # TextRank implementation
-│   ├── abstractive.py     # BART inference script
-│   └── evaluate.py        # ROUGE & BLEU scoring utilities
-└── summarizer_show.py     # Demo: prints article, reference, and both summaries
+-├── README.md
+-├── data/
+-│   └── (optional predownloaded dataset files)
+-├── src/
+-│   ├── extractive.py      # TextRank implementation
+-│   ├── abstractive.py     # BART inference script
+-│   └── evaluate.py        # ROUGE & BLEU scoring utilities
+-└── summarizer_show.py     # Demo: prints article, reference, and both summaries
 
 ## 📈 Sample Results
-Method	ROUGE-1	ROUGE-2	ROUGE-L	BLEU
-Extractive	0.41	0.18	0.37	0.12
-Abstractive	0.44	0.21	0.41	0.18
+-Method	ROUGE-1	ROUGE-2	ROUGE-L	BLEU
+-Extractive	0.41	0.18	0.37	0.12
+-Abstractive	0.44	0.21	0.41	0.18
 
 ## 📝 References
-Hermann et al., 2015. Teaching Machines to Read and Comprehend.
+-Hermann et al., 2015. Teaching Machines to Read and Comprehend.
 
-See et al., 2017. Get To The Point: Summarization with Pointer-Generator Networks.
+-See et al., 2017. Get To The Point: Summarization with Pointer-Generator Networks.
 
-Mihalcea & Tarau, 2004. TextRank: Bringing Order into Texts.
+-Mihalcea & Tarau, 2004. TextRank: Bringing Order into Texts.
 
-Lewis et al., 2020. BART: Denoising Sequence-to-Sequence Pre-training for NLG.
+-Lewis et al., 2020. BART: Denoising Sequence-to-Sequence Pre-training for NLG.
 
-Lin, 2004. ROUGE: A Package for Automatic Evaluation of Summaries.
+-Lin, 2004. ROUGE: A Package for Automatic Evaluation of Summaries.
 
-Papineni et al., 2002. BLEU: a Method for Automatic Evaluation of MT.
+-Papineni et al., 2002. BLEU: a Method for Automatic Evaluation of MT.
 
-Wolf et al., 2020. Transformers: State-of-the-Art Natural Language Processing.
+-Wolf et al., 2020. Transformers: State-of-the-Art Natural Language Processing.
