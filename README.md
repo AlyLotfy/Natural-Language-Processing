@@ -30,10 +30,7 @@ Both methods are applied to the CNN/DailyMail dataset. Summaries are compared ag
 - [rouge-score](https://github.com/google-research/google-research/tree/master/rouge)  
 - [tqdm](https://github.com/tqdm/tqdm)  
 
-Install with:
 
-```bash
-pip install nltk numpy transformers datasets rouge-score tqdm
 
 ## 📂 Repository Structure
 .
