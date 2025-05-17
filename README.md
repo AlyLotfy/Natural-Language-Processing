@@ -45,7 +45,9 @@ Both methods are applied to the CNN/DailyMail dataset. Summaries are compared ag
 
 ## 📈 Sample Results
 -Method	ROUGE-1	ROUGE-2	ROUGE-L	BLEU
+
 -Extractive	0.41	0.18	0.37	0.12
+
 -Abstractive	0.44	0.21	0.41	0.18
 
 ## 📝 References
