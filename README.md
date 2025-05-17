@@ -35,12 +35,19 @@ Both methods are applied to the CNN/DailyMail dataset. Summaries are compared ag
 ## 📂 Repository Structure
 .
 -├── README.md
+
 -├── data/
+
 -│   └── (optional predownloaded dataset files)
+
 -├── src/
+
 -│   ├── extractive.py      # TextRank implementation
+
 -│   ├── abstractive.py     # BART inference script
+
 -│   └── evaluate.py        # ROUGE & BLEU scoring utilities
+
 -└── summarizer_show.py     # Demo: prints article, reference, and both summaries
 
 ## 📈 Sample Results
