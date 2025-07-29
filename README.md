@@ -2,7 +2,7 @@
 
 A dual-approach NLP system combining extractive TextRank and abstractive BART to generate concise summaries of CNN/DailyMail news articles, with automatic evaluation via ROUGE and BLE
 
-## 📖 Project Description
+## Project Description
 
 This repository demonstrates two complementary approaches to automatic text summarization:
 
@@ -18,7 +18,7 @@ Both methods are applied to the CNN/DailyMail dataset. Summaries are compared ag
 
 ---
 
-## ⚙️ Requirements
+##  Requirements
 
 - Python 3.7+  
 - [NLTK](https://www.nltk.org/)  
@@ -30,7 +30,7 @@ Both methods are applied to the CNN/DailyMail dataset. Summaries are compared ag
 
 
 
-## 📂 Repository Structure
+## Repository Structure
 .
 -├── README.md
 
@@ -48,14 +48,14 @@ Both methods are applied to the CNN/DailyMail dataset. Summaries are compared ag
 
 -└── summarizer_show.py     # Demo: prints article, reference, and both summaries
 
-## 📈 Sample Results
+## Sample Results
 -Method	ROUGE-1	ROUGE-2	ROUGE-L	BLEU
 
 -Extractive	0.41	0.18	0.37	0.12
 
 -Abstractive	0.44	0.21	0.41	0.18
 
-## 📝 References
+## References
 -Hermann et al., 2015. Teaching Machines to Read and Comprehend.
 
 -See et al., 2017. Get To The Point: Summarization with Pointer-Generator Networks.
