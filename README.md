@@ -1,15 +1,15 @@
-# 📝 English Text Summarization — Extractive vs. Abstractive
+# English Text Summarization — Extractive vs. Abstractive
 
 **A dual-approach NLP system combining graph-based TextRank and a fine-tuned BART transformer to summarize CNN/DailyMail news articles.**
 
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)](#)
-[![Hugging Face](https://img.shields.io/badge/🤗-Hugging_Face-FFD21E)](#)
+[![Hugging Face](https://img.shields.io/badge/Hugging_Face-FFD21E)](#)
 [![Transformers](https://img.shields.io/badge/Transformers-BART-FF6F00)](#)
 [![Notebook](https://img.shields.io/badge/Jupyter-Notebook-F37626?logo=jupyter&logoColor=white)](#)
 
 ---
 
-## 📌 Overview
+## Overview
 
 This repository implements and benchmarks two **complementary** approaches to automatic text summarization:
 
@@ -24,7 +24,7 @@ The point of the project isn't just to beat a number — it's to make the trade-
 
 ---
 
-## 🎯 Why Two Approaches?
+## Why Two Approaches?
 
 | | Extractive (TextRank) | Abstractive (BART) |
 | --- | --- | --- |
@@ -38,7 +38,7 @@ Comparing them on the same corpus shows where each shines.
 
 ---
 
-## 🧪 Approach
+## Approach
 
 ### Extractive — TextRank
 - Sentence-level graph where edges weight pairwise similarity
@@ -57,7 +57,7 @@ Comparing them on the same corpus shows where each shines.
 
 ---
 
-## 📊 Sample Results
+## Sample Results
 
 | Method | ROUGE-1 | ROUGE-2 | ROUGE-L | BLEU |
 | --- | --- | --- | --- | --- |
@@ -68,33 +68,33 @@ BART wins on every metric, which is unsurprising — but the gap is smaller than
 
 ---
 
-## 🔧 Tech Stack
+## Tech Stack
 
 - **Python 3.7+**
 - **NLTK** — sentence splitting & tokenization
 - **NumPy** — TextRank similarity matrix
-- **🤗 Transformers** — BART model & tokenizer
-- **🤗 Datasets** — CNN/DailyMail loader
+- **Transformers** — BART model & tokenizer
+- **Datasets** — CNN/DailyMail loader
 - **rouge-score** — ROUGE-1/2/L evaluation
 - **tqdm** — progress bars
 
 ---
 
-## 📁 Repository Layout
+## Repository Layout
 
 ```
 Natural-Language-Processing/
-├── data/                    # Optional pre-downloaded dataset shards
+├── data/ # Optional pre-downloaded dataset shards
 ├── src/
-│   ├── extractive.py        # TextRank implementation
-│   ├── abstractive.py       # BART inference
-│   └── evaluate.py          # ROUGE & BLEU scoring
-└── summarizer_show.py       # Demo: prints article + reference + both summaries
+│ ├── extractive.py # TextRank implementation
+│ ├── abstractive.py # BART inference
+│ └── evaluate.py # ROUGE & BLEU scoring
+└── summarizer_show.py # Demo: prints article + reference + both summaries
 ```
 
 ---
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 git clone https://github.com/AlyLotfy/Natural-Language-Processing.git
@@ -109,7 +109,7 @@ python summarizer_show.py
 
 ---
 
-## 📚 References
+## References
 
 - Mihalcea & Tarau, 2004. *TextRank: Bringing Order into Texts.*
 - Lewis et al., 2020. *BART: Denoising Sequence-to-Sequence Pre-training for NLG.*
@@ -121,6 +121,6 @@ python summarizer_show.py
 
 ---
 
-## 📄 License
+## License
 
-Academic project, AAST Computer Engineering.
+Academic project, AAST College of Artificial Intelligence.
