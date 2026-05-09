@@ -1,96 +1,104 @@
-# English Text Summarization — Extractive vs. Abstractive
+# Airline Review Rating Prediction — NLP Pipeline
 
-**A dual-approach NLP system combining graph-based TextRank and a fine-tuned BART transformer to summarize CNN/DailyMail news articles.**
+**Predicting customer satisfaction ratings from Singapore Airlines reviews using classical NLP: SVM with TF-IDF achieves 67.6 % accuracy on a 5-class problem.**
 
 [![Python](https://img.shields.io/badge/Python-3.10+-3776AB?logo=python&logoColor=white)](#)
-[![Hugging Face](https://img.shields.io/badge/Hugging_Face-FFD21E)](#)
-[![Transformers](https://img.shields.io/badge/Transformers-BART-FF6F00)](#)
+[![scikit-learn](https://img.shields.io/badge/scikit--learn-F7931E?logo=scikitlearn&logoColor=white)](#)
+[![NLTK](https://img.shields.io/badge/NLTK-154360)](#)
 [![Notebook](https://img.shields.io/badge/Jupyter-Notebook-F37626?logo=jupyter&logoColor=white)](#)
 
 ---
 
 ## Overview
 
-This repository implements and benchmarks two **complementary** approaches to automatic text summarization:
+This project builds an end-to-end NLP pipeline to predict a customer's 1–5 star rating from the text of their airline review. The dataset is 10,000 Singapore Airlines reviews scraped from a public review platform.
 
-| Approach | Model | What it does |
+Multi-class sentiment classification (5 classes, heavily skewed toward 5-star reviews) is meaningfully harder than binary sentiment analysis. The pipeline handles the full workflow: noisy text in → structured predictions out.
+
+---
+
+## Dataset
+
+- **Source:** Kaggle — Singapore Airlines customer reviews
+- **Size:** 10,000 reviews
+- **Target:** `rating` (integer, 1–5)
+- **Class distribution:** Skewed — ~54 % of reviews are 5-star, making class imbalance a real challenge
+
+---
+
+## Pipeline
+
+### 1. Text Cleaning
+
+A multi-step cleaning function applied to every review:
+
+- Lowercase conversion
+- URL and number removal
+- Punctuation stripping
+- Tokenization (NLTK `word_tokenize`)
+- Stopword removal
+- Spell correction (`pyspellchecker`)
+- Lemmatization (WordNet)
+
+### 2. Feature Engineering
+
+Two representations compared:
+
+| Method | Implementation |
+| --- | --- |
+| TF-IDF | `TfidfVectorizer(ngram_range=(1,2))` |
+| Bag of Words | `CountVectorizer(ngram_range=(1,2))` |
+
+Bigrams were included in both to capture short phrases like "not good" or "very comfortable."
+
+### 3. Models
+
+Both models were tuned with `GridSearchCV` (5-fold cross-validation):
+
+| Model | Grid searched |
+| --- | --- |
+| Support Vector Machine (SVC) | C, kernel {linear, rbf}, gamma |
+| Random Forest | n_estimators, max_depth, min_samples_split |
+
+### 4. Evaluation
+
+Accuracy, precision, recall, F1-score per class, and confusion matrix.
+
+---
+
+## Results
+
+| Model | Features | Accuracy |
 | --- | --- | --- |
-| **Extractive** | TextRank (graph-based) | Picks the most central sentences from the source article |
-| **Abstractive** | `facebook/bart-large-cnn` | Generates a new, paraphrased summary from scratch |
+| **SVM** | **TF-IDF** | **67.6 %** |
+| Random Forest | TF-IDF | 57.6 % |
+| SVM | Bag of Words | 65.5 % |
+| Random Forest | Bag of Words | 57.8 % |
 
-Both are evaluated on the **CNN/DailyMail** corpus against journalist-written reference highlights, using the standard NLP evaluation suite — **ROUGE-1, ROUGE-2, ROUGE-L** and **BLEU**.
+SVM with TF-IDF is the best performer. The main difficulty is distinguishing 2, 3, and 4-star reviews — the model is confident at the extremes (1-star and 5-star) but uncertain in the middle.
 
-The point of the project isn't just to beat a number — it's to make the trade-off **explicit**: extractive is interpretable and never hallucinates, abstractive is fluent and concise but can confabulate. Real-world summarization systems usually need both.
-
----
-
-## Why Two Approaches?
-
-| | Extractive (TextRank) | Abstractive (BART) |
-| --- | --- | --- |
-| Output | Verbatim sentences from source | Newly composed text |
-| Hallucination risk | None | Real (BART can invent facts) |
-| Fluency / brevity | Limited by source phrasing | High |
-| Compute cost | Tiny (graph + PageRank) | High (Transformer inference) |
-| Best for | Compliance, legal, scientific | Marketing, news, casual reading |
-
-Comparing them on the same corpus shows where each shines.
+Best SVM hyperparameters found: `C=1`, `kernel=linear`, `gamma=scale`.
 
 ---
 
-## Approach
+## Key Takeaways
 
-### Extractive — TextRank
-- Sentence-level graph where edges weight pairwise similarity
-- PageRank to rank sentences by centrality
-- Top-K selection by score, reordered to preserve source flow
-
-### Abstractive — BART
-- Pre-trained `facebook/bart-large-cnn` (already fine-tuned on CNN/DailyMail)
-- Standard generation parameters (beam search, length penalty)
-- Optional fine-tuning hooks for domain adaptation
-
-### Evaluation
-- **ROUGE-1 / 2 / L** — n-gram recall vs. reference highlights
-- **BLEU** — precision-oriented n-gram overlap
-- Qualitative side-by-side comparison
-
----
-
-## Sample Results
-
-| Method | ROUGE-1 | ROUGE-2 | ROUGE-L | BLEU |
-| --- | --- | --- | --- | --- |
-| Extractive (TextRank) | 0.41 | 0.18 | 0.37 | 0.12 |
-| Abstractive (BART) | **0.44** | **0.21** | **0.41** | **0.18** |
-
-BART wins on every metric, which is unsurprising — but the gap is smaller than you'd expect, and TextRank is **orders of magnitude cheaper** to run.
+- TF-IDF consistently outperforms raw counts for this task.
+- SVM beats Random Forest on text classification with sparse high-dimensional input — a known pattern.
+- The class imbalance (5-star dominance) inflates overall accuracy; macro-averaged F1 is a better signal for this dataset.
+- Spell checking during preprocessing measurably improved token quality but adds significant runtime.
 
 ---
 
 ## Tech Stack
 
-- **Python 3.7+**
-- **NLTK** — sentence splitting & tokenization
-- **NumPy** — TextRank similarity matrix
-- **Transformers** — BART model & tokenizer
-- **Datasets** — CNN/DailyMail loader
-- **rouge-score** — ROUGE-1/2/L evaluation
-- **tqdm** — progress bars
-
----
-
-## Repository Layout
-
-```
-Natural-Language-Processing/
-├── data/ # Optional pre-downloaded dataset shards
-├── src/
-│ ├── extractive.py # TextRank implementation
-│ ├── abstractive.py # BART inference
-│ └── evaluate.py # ROUGE & BLEU scoring
-└── summarizer_show.py # Demo: prints article + reference + both summaries
-```
+- **Python 3.10+**
+- **NLTK** — tokenization, stopwords, lemmatization
+- **pyspellchecker** — spelling correction
+- **scikit-learn** — TF-IDF, CountVectorizer, SVM, Random Forest, GridSearchCV
+- **pandas / NumPy** — data handling
+- **matplotlib / seaborn** — visualizations
+- **Jupyter Notebook**
 
 ---
 
@@ -100,24 +108,20 @@ Natural-Language-Processing/
 git clone https://github.com/AlyLotfy/Natural-Language-Processing.git
 cd Natural-Language-Processing
 
-pip install nltk numpy transformers datasets rouge-score tqdm
-python -m nltk.downloader punkt
+pip install nltk scikit-learn pyspellchecker pandas numpy matplotlib seaborn jupyter
+python -m nltk.downloader stopwords punkt wordnet
 
-# See both summaries side by side
-python summarizer_show.py
+# Place singapore_airlines_reviews.csv in the repo root
+jupyter notebook
 ```
 
 ---
 
-## References
+## Future Work
 
-- Mihalcea & Tarau, 2004. *TextRank: Bringing Order into Texts.*
-- Lewis et al., 2020. *BART: Denoising Sequence-to-Sequence Pre-training for NLG.*
-- See et al., 2017. *Get To The Point: Summarization with Pointer-Generator Networks.*
-- Hermann et al., 2015. *Teaching Machines to Read and Comprehend.* (CNN/DailyMail)
-- Lin, 2004. *ROUGE: A Package for Automatic Evaluation of Summaries.*
-- Papineni et al., 2002. *BLEU: a Method for Automatic Evaluation of Machine Translation.*
-- Wolf et al., 2020. *Transformers: State-of-the-Art Natural Language Processing.*
+- Replace SVM with a fine-tuned BERT or DistilBERT model for contextual embeddings
+- Weighted loss or oversampling to handle the class imbalance
+- Aspect-based sentiment analysis to extract ratings per dimension (seat, food, service)
 
 ---
 
